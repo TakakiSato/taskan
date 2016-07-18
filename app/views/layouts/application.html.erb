@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <title>Taskan</title>
+  <%= include_gon %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!--チーム作成フォームー-->
+  <script>
+    $(function () {
+      $('#create-team-form').toggle();
+      $('#create-team').click(function(){
+        $('#create-team-form').toggle(true);
+        $('#create-team').click(function(){
+          $('#create-team-form').toggle();
+        });
+      });
+    });
+  </script>
+  <!--タスク追加入力フォーム-->
+  <script>
+   $(function () {
+    $(document).on('click','.add-task-child',function(){
+      $(this).parent().parent().children().toggle();
+    });
+  });
+</script>
+<!--ドラッグアンドドロップ設定-->
+<script>
+  function onDragStart( $event ) {
+    $event.dataTransfer.setData( "text/html", $event.target.id );
+
+  }
+
+  function onDrop( $event, $this ) {
+    $event.preventDefault();
+    var $data = $event.dataTransfer.getData( "text/html" );
+    console.log($this.id)
+    console.log($data)
+    $this.appendChild( document.getElementById($data ) );
+    id_date=($this.id).split(" ")
+    console.log(id_date)
+        // 送信
+        $.ajax({
+            url: '/tasks/' + $data + '.json',
+            type: 'patch',
+            data: {user_id: id_date[0],date: id_date[1]},
+            timeout: 10000
+        });
+  }
+
+  function onDragOver( $event ) {
+    $event.preventDefault();
+  }
+</script>
+
+</head>
+<body>
+  <header>
+    <div class=contents>
+      <nav class="navbar navbar-default topbar">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target="#collapse-target">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">TasKan</a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="collapse-target">
+            <ul class="nav navbar-nav">
+              <% if user_signed_in? %>
+              <li><strong><p class="navbar-text">　<%= current_user.user_name%></p></strong></li>
+              <li>　<p class="navbar-text fa fa-info-circle"><span class="badge">12</span></p></li>
+              <li><%= link_to 'プロフィール変更', edit_user_registration_path %></li>
+              <li><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
+              <% else %>
+              <li><%= link_to 'サインアップ', new_user_registration_path %></li>
+              <li><%= link_to 'ログイン', new_user_session_path %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <%= yield %>
+  </div>
+</body>
+</html>

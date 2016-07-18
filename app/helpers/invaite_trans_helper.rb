@@ -1,0 +1,2 @@
+module InvaiteTransHelper
+end

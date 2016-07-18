@@ -1,0 +1,97 @@
+/* サイドオープン時にメインコンテンツを覆う部分 */
+.overlay {
+  content: '';
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0);
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+  z-index: 3;
+}
+.overlay::after {
+  visibility: hidden;
+  position: fixed;
+  top: 40%;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 50px;
+  color: rgba(255,255,255,0);
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+}
+.side-open .overlay {
+  visibility: visible;
+  cursor: pointer;
+  background: rgba(0,0,0,.7);
+}
+.side-open .overlay::after {
+  visibility: visible;
+  color: rgba(255,255,255,.8);
+}
+
+/* サイドメニュー ※リストのスタイルは省略 */
+.side-menu {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  padding-top: 150px;
+  text-align: left;
+  font-size: 13px;
+  background: rgba(0,0,0,0);
+  z-index: 1;
+}
+
+
+/* 開閉用ボタン ※ボタンの細かいスタイルは省略 */
+.side-menu-btn {
+  position: fixed;
+  top: 72px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 4;
+  margin: auto;
+}
+
+/* メインコンテンツ */
+.container {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  min-height: 100%; /* 最小の高さ */
+  text-align: center;
+  font-size: 13px;
+  background: #F8F8F8;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+  z-index: 2;
+}
+
+.topbar{
+  z-index: 2;
+}
+
+/* メインコンテンツ内のスタイル ※デザインに併せて適当に */
+
+/* サイドメニューオープン */
+.side-open .container,
+.side-open .overlay {
+  -webkit-transform: translate3d(-300px, 0, 0);
+  transform: translate3d(-300px, 0, 0);
+}
+
+div.background {
+  min-height: 100%; /* 最小の高さ */
+  width: 300px;
+  background: #EFEFEF;
+}

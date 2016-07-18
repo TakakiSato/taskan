@@ -1,0 +1,2 @@
+class TaskTypesController < ApplicationController
+end

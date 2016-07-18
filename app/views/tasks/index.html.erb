@@ -1,0 +1,39 @@
+         <% if user_signed_in? %>
+         <!-- サイドオープン時メインコンテンツを覆う -->
+         <div class="overlay" id="js__overlay"></div>
+
+         <!-- ローディング -->
+
+         <!-- サイドメニュー -->
+         <nav class="side-menu">
+          <h2>所属チーム</h2>
+          <ul id="belong_team" class="js-form">
+          </ul>
+          <br>
+
+          <div class="btn btn-default" id="create-team">
+            <p  class="navbar-text fa fa-users"> チーム作成</p>
+          </div>
+
+          <!--チーム作成フォーム-->
+          <div id="create-team-form" class="js-form">
+            <%= form_tag('/teams.json', :method => :post , :class => 'js-submit') do %>
+            <%= hidden_field_tag 'user_id', current_user.id%>
+            チーム名:
+            <%= text_field_tag 'team_name', params[:team_name]%>
+            <%= submit_tag '作成', class: "btn btn-primary "%>
+            <% end %>
+          </div>
+        </nav>
+
+        <!-- 開閉用ボタン -->
+        <div class="side-menu-btn btn btn-default" id="js__sideMenuBtn">
+          <p  class="navbar-text"> チーム管理</p>
+        </div>
+        <!-- メインコンテンツ -->
+        <div class="container">
+        <div id=calendar></div>
+        </div>
+
+
+<% end %>

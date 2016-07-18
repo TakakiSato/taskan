@@ -1,0 +1,10 @@
+こんにちは。
+
+<%=@invite_user.user_name%>さんがあなたを<%=@team.team_name%>チームに招待しました。
+
+チームに参加する場合、以下のURLをクリックしてください。
+http://<%=@url%>/join_team?team_id=<%=@team.team_id%>&invite_user_id=<%=@invite_user.id%>&mail=<%=@to%>
+
+こちらのメールは自動送信となっております。
+送信専用となりますので、返信をいただいても対応しかねます。
+見覚えのなければ、恐れ入りますが破棄いただきますよう、お願いします。

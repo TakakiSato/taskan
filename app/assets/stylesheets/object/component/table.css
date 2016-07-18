@@ -1,0 +1,9 @@
+table {
+    border-radius:5px;
+    width: 89%;
+}
+
+, td, th{
+    border-radius:5px;
+    width: 20%;
+}
