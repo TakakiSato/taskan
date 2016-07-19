@@ -36,7 +36,7 @@ $(function() {
             // 通信成功時の処理
             success: function(result, textStatus, xhr) {
                 $('div#' + result.task.task_id).remove();
-                $('td#' + result.task.user_id + '_' + result.task.date).append('<div id='+ result.task.task_id +' class="task_cade task_done_collor"><strong>' + result.task.task_name + '</strong><br>予:' +result.task.plan_time + '実:' +result.task.result_time + '<br></div>');
+                $('td#' + result.task.user_id + '_' + result.task.date).append('<div id='+ result.task.task_id +' class="task_cade task_done_collor"><strong>' + result.task.task_name + '</strong><br>予:' +result.task.plan_time + 'h 実:' +result.task.result_time + 'h<br></div>');
             },
 
             // 通信失敗時の処理

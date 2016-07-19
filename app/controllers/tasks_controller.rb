@@ -57,6 +57,13 @@ class TasksController < ApplicationController
       result=Hash.new
       success= true
       updCol=Hash.new
+      p params[:complete_flag]
+      p params[:result_time].blank?
+      if params[:complete_flag]=="1" && params[:result_time].blank?
+        result[:error_message]="作業実績が入力されていません。"
+        flash[:notice] = result[:error_message]
+        raise
+      end
       #パラメータで渡されているものをチェックして更新用ハッシュを作成する。
       Task.column_names.each do |column|
         if params[column].present?
