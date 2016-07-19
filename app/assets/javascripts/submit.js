@@ -50,6 +50,8 @@ $(function() {
                     $('#team_' +$form.attr('id')+ '_member').append("</ul>");
                     //招待処理ボタン表示
                     $('#team_' +$form.attr('id')+ '_member').append('<div class="btn btn-default invite_start" id="' + $form.attr("id") + ' '+ $("#user_id").attr("value") + '" ><p class="fa fa-user-plus">メンバーを招待する</p></div>');
+                }else if ($form.attr('action')=='/tasks/'+result.task.task_id+'.json' && $form.attr('method')=='patch'){
+                    console.log(Ssssssssssssssss);
                 }
             },
             // 通信失敗時の処理

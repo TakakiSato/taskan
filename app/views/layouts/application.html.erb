@@ -43,7 +43,7 @@
     console.log($this.id)
     console.log($data)
     $this.appendChild( document.getElementById($data ) );
-    id_date=($this.id).split(" ")
+    id_date=($this.id).split("_")
     console.log(id_date)
         // 送信
         $.ajax({
@@ -79,7 +79,6 @@
             <ul class="nav navbar-nav">
               <% if user_signed_in? %>
               <li><strong><p class="navbar-text">　<%= current_user.user_name%></p></strong></li>
-              <li>　<p class="navbar-text fa fa-info-circle"><span class="badge">12</span></p></li>
               <li><%= link_to 'プロフィール変更', edit_user_registration_path %></li>
               <li><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
               <% else %>

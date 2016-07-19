@@ -65,6 +65,7 @@ class TasksController < ApplicationController
       end
       Task.upsert({:task_id=>params[:id]},
         updCol)
+      result[:task]=Task.where("task_id = ?" ,params[:id])[0]
     rescue => e
       if result[:error_message].blank?
         result[:error_message]=e.message

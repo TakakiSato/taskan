@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'PrintBold';
+  src: font-url('PrintBold.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PrintClearly';
+  src: font-url('PrintClearly.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PrintDashed';
+  src: font-url('PrintDashed.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+title{
+    font-family: 'PrintBold';
+}
+.js-accordion {
+    width:100%;
+    display: block;
+}
+
+.btn-team-size{
+    width:100%;
+}
+
+.none {
+    display: none;
+}
+
+
+body{
+font-family: helvetica, arial, 'hiragino kaku gothic pro', meiryo, 'ms pgothic', sans-serif;
+}
