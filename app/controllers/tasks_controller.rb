@@ -57,8 +57,6 @@ class TasksController < ApplicationController
       result=Hash.new
       success= true
       updCol=Hash.new
-      p params[:complete_flag]
-      p params[:result_time].blank?
       if params[:complete_flag]=="1" && params[:result_time].blank?
         result[:error_message]="作業実績が入力されていません。"
         flash[:notice] = result[:error_message]
@@ -70,6 +68,12 @@ class TasksController < ApplicationController
           updCol[column]=params[column]
         end
       end
+      p updCol
+      p updCol["date"]
+      if params[:date]=="notset"
+        updCol["date"] = nil
+      end
+      p updCol
       Task.upsert({:task_id=>params[:id]},
         updCol)
       result[:task]=Task.where("task_id = ?" ,params[:id])[0]

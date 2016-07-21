@@ -10,8 +10,8 @@ class Task < ActiveRecord::Base
         team_members.each do |team_member|
             memberTaskHash=Hash.new
             #メンバーのタスク一覧を取得
-            team_member_tasks=Task.where("user_id = ? and date >= ? and date <= ? ",team_member.id,date,seven_day_next)
-            date_list=team_member_tasks.uniq.pluck(:date)
+            team_member_tasks=Task.where("user_id = ? and ((date >= ? and date <= ? ) or date is null)",team_member.id,date,seven_day_next)
+            date_list=team_member_tasks.where("date is not null").uniq.pluck(:date)
             #メンバー名取得
             user_name=User.where("id = ?",team_member.id)
             memberTaskHash[:user_name]=user_name[0].user_name
@@ -24,12 +24,16 @@ class Task < ActiveRecord::Base
                 taskHash[:task_list]=team_member_tasks.where("date = ?" ,date)
                 week_task_array.push(taskHash)
             end
+            #未スケジュールタスク
+            taskHash=Hash.new
+            taskHash[:date]="notset"
+            taskHash[:task_list]=team_member_tasks.where("date is null")
+            week_task_array.push(taskHash)
+
             memberTaskHash[:week_task_list]=week_task_array
             taskList.push(memberTaskHash)
         end
-        p "aaaaaaaaaaaa"
         p taskList
-        p "aaaaaaaaaaaa"
         taskList
     end
 end
