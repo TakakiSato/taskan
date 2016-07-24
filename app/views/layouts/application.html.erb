@@ -10,87 +10,85 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  <!--チーム作成フォームー-->
-  <script>
-    $(function () {
-      $('#create-team-form').toggle();
-      $('#create-team').click(function(){
-        $('#create-team-form').toggle(true);
-        $('#create-team').click(function(){
-          $('#create-team-form').toggle();
-        });
-      });
-    });
-  </script>
-  <!--タスク追加入力フォーム-->
-  <script>
-   $(function () {
-    $(document).on('click','.add-task-child',function(){
-      $(this).parent().parent().children().toggle();
-    });
-  });
-</script>
-<!--ドラッグアンドドロップ設定-->
-<script>
-  function onDragStart( $event ) {
-    $event.dataTransfer.setData( "text/html", $event.target.id );
 
-  }
+  <!--ドラッグアンドドロップ設定-->
+  <script>
+    function onDragStart( $event ) {
+      $event.dataTransfer.setData( "text/html", $event.target.id );
+      //$('#team_' +team_id+ '_member').empty();
 
-  function onDrop( $event, $this ) {
-    $event.preventDefault();
-    var $data = $event.dataTransfer.getData( "text/html" );
-    console.log($this.id)
-    console.log($data)
-    $this.appendChild( document.getElementById($data ) );
-    id_date=($this.id).split("_")
-    console.log(id_date)
+    }
+
+    function onDrop( $event, $this ) {
+      $event.preventDefault();
+      var $data = $event.dataTransfer.getData( "text/html" );
+      console.log($this.id)
+      console.log($('#user_id').val())
+      console.log($data)
+      console.log($("#task_done_form"+$data))
+      //console.log(document.getElementById($data).child("user_id"))
+      //console.log(document.getElementById($data).childs("date"))
+      id_date=($this.id).split("_")
+      $this.appendChild( document.getElementById($data) );
+//    //自分のタスク
+//    if ($('#user_id').val()==id_date[0]){
+//    //未スケジュールの場合
+//    if (id_date[1]=="notset"){
+//      $this.appendChild( ownNotScaduledTask(task,id_date[0],id_date[1]) );
+//    }else{
+//    }
+//  }else{
+//    //メンバーのタスク
+//    ownScaduledTask(task,user_id,date)
+//    ownNotScaduledTask(task,user_id,date)
+//    memberTask(task,user_id,date)
+//  }
         // 送信
         $.ajax({
-            url: '/tasks/' + $data + '.json',
-            type: 'patch',
-            data: {user_id: id_date[0],date: id_date[1]},
-            timeout: 10000
+          url: '/tasks/' + $data + '.json',
+          type: 'patch',
+          data: {user_id: id_date[0],date: id_date[1]},
+          timeout: 10000
         });
-  }
+      }
 
-  function onDragOver( $event ) {
-    $event.preventDefault();
-  }
-</script>
+      function onDragOver( $event ) {
+        $event.preventDefault();
+      }
+    </script>
 
-</head>
-<body>
-  <header>
-    <div class=contents>
-      <nav class="navbar navbar-default topbar">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button class="navbar-toggle" data-toggle="collapse" data-target="#collapse-target">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a href="/" class="navbar-brand">TasKan</a>
+  </head>
+  <body>
+    <header>
+      <div class=contents>
+        <nav class="navbar navbar-default topbar">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button class="navbar-toggle" data-toggle="collapse" data-target="#collapse-target">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a href="/" class="navbar-brand">TasKan</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="collapse-target">
+              <ul class="nav navbar-nav">
+                <% if user_signed_in? %>
+                <li><strong><p class="navbar-text">　<%= current_user.user_name%></p></strong></li>
+                <li><%= link_to 'プロフィール変更', edit_user_registration_path %></li>
+                <li><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
+                <% else %>
+                <li><%= link_to 'サインアップ', new_user_registration_path %></li>
+                <li><%= link_to 'ログイン', new_user_session_path %></li>
+                <% end %>
+              </ul>
+            </div>
           </div>
-
-          <div class="collapse navbar-collapse" id="collapse-target">
-            <ul class="nav navbar-nav">
-              <% if user_signed_in? %>
-              <li><strong><p class="navbar-text">　<%= current_user.user_name%></p></strong></li>
-              <li><%= link_to 'プロフィール変更', edit_user_registration_path %></li>
-              <li><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
-              <% else %>
-              <li><%= link_to 'サインアップ', new_user_registration_path %></li>
-              <li><%= link_to 'ログイン', new_user_session_path %></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <%= yield %>
-  </div>
-</body>
-</html>
+        </nav>
+      </header>
+      <%= yield %>
+    </div>
+  </body>
+  </html>

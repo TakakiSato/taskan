@@ -11,7 +11,7 @@ class Task < ActiveRecord::Base
             memberTaskHash=Hash.new
             #メンバーのタスク一覧を取得
             team_member_tasks=Task.where("user_id = ? and ((date >= ? and date <= ? ) or date is null)",team_member.id,date,seven_day_next)
-            date_list=team_member_tasks.where("date is not null").uniq.pluck(:date)
+            date_list=team_member_tasks.uniq.pluck(:date)
             #メンバー名取得
             user_name=User.where("id = ?",team_member.id)
             memberTaskHash[:user_name]=user_name[0].user_name

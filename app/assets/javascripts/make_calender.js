@@ -1,5 +1,5 @@
 $(function() {
-   function getDateTime(format, add_day,target_date){
+ function getDateTime(format, add_day,target_date){
     if (format == null) format = null;
     if (add_day == null) add_day = 0;
 
@@ -54,7 +54,6 @@ function weekDateGet(target_date){
 
     function createTable(task_lists,week,target_date){
         week.push("未スケジュール");
-        console.log(weekDate);
         //自分を先頭にソート
         $.each(task_lists, function(i, task_list){
             if ($('#user_id').val() == task_list.user_id){
@@ -74,8 +73,9 @@ function weekDateGet(target_date){
         var table=$('<table>');
         //日付列作成
         var th = $('<tr><th class=name_col></th>')
+        var dayWeek =["(日)","(月)","(火)","(水)","(木)","(金)","(土)",""]
         $.each(week,function(i,item){
-            th.append('<th class=date_col>' + week[i] + '</th>');
+            th.append('<th class=date_col>' + week[i] + dayWeek[i] + '</th>');
         });
         //未スケジュール用のパラメータに書き換え
         week[week.length-1]="notset";
@@ -96,100 +96,37 @@ function weekDateGet(target_date){
                         $.each(task_list.task_list, function(m, task){
                             if (task.complete_flag == 1){
                                 //完了タスクの場合
-                                tasktd.append('<div id='+ task.task_id +' class="task_cade task_done_collor"><strong>' + task.task_name + '</strong><br>予定:'  +task.plan_time + 'h　実績:' +task.result_time + 'h<br></div>')
+                                tasktd.append(doneTask(task))
                             }else if(j==0){
                                 if (date!="notset" ){
                                 //自分のタスクの場合
-                                tasktd.append('\
-                                    <div id="task-done-form' +task.task_id+'" style="display:none;">\
-                                    <form action="/tasks/'+task.task_id+'.json" method="patch" class="task_update" >\
-                                    <input name="task_id" type="hidden" value="' + task.task_id + '">\
-                                    <input name="complete_flag" type="hidden" value=1><br>作業時間実績:<br>\
-                                    <div class="btn-group" data-toggle="buttons" name="result_time"><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value="0.5" name="result_time">0.5</label><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value=1 name="result_time">1</label><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value=2 name="result_time">2</label><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value=3 name="result_time">3</label><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value=4 name="result_time">4</label>\
-                                    </div>\
-                                    <input class="btn btn-primary add-task-child" name="commit" type="submit" value="送信">\
-                                    </form>\
-                                    </div>\
-                                    <div id="upd_task_'+task.task_id+'"style="display:none;">\
-                                    <form action="/tasks/'+task.task_id+'.json" method="patch" class="task_update" >\
-                                    タスク名:<br><input id="upd_task_name_'+task.task_id+'" name="task_name" type="text" value="' + task.task_name + '">\
-                                    <input name="user_id" type="hidden" value="' + $('#user_id').val() + '">\
-                                    <input name="date" type="hidden" value="' + week[k] + '"><br>予定作業時間:<br><div class="btn-group" data-toggle="buttons" name="plan_time">\
-                                    <label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value="0.5" name="plan_time">0.5</label><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value=1 name="plan_time">1</label><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value=2 name="plan_time">2</label><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value=3 name="plan_time">3</label><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value=4 name="plan_time">4</label></div>\
-                                    <input class="btn btn-primary add-task-child" name="commit" type="submit" value="送信">\
-                                    </form>\
-                                    </div>\
-                                    <div id='+ task.task_id +' class="task_cade task_doing task_doing_collor" draggable="true" ondragstart="onDragStart( event );">\
-                                    <strong id=task_name_'+task.task_id+'>' + task.task_name + '</strong>\
-                                    <br>予定:' +task.plan_time + 'h 実績:<br>\
-                                    <a class="task-done-start btn btn-default"' + j + k +'" >完了</a>\
-                                    </div>')
+                                tasktd.append(ownScaduledTask(task,usr_task_list.user_id,week[k]))
                             }else{
                                 //未スケジュールの場合完了ボタンを表示しない。
-                                tasktd.append('\
-                                    <div id="upd_task_'+task.task_id+'"style="display:none;">\
-                                    <form action="/tasks/'+task.task_id+'.json" method="patch" class="task_update" >\
-                                    タスク名:<br><input id="upd_task_name_'+task.task_id+'" name="task_name" type="text" value="' + task.task_name + '">\
-                                    <input name="user_id" type="hidden" value="' + $('#user_id').val() + '">\
-                                    <input name="date" type="hidden" value="' + week[k] + '"><br>予定作業時間:<br><div class="btn-group" data-toggle="buttons" name="plan_time">\
-                                    <label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value="0.5" name="plan_time">0.5</label><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value=1 name="plan_time">1</label><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value=2 name="plan_time">2</label><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value=3 name="plan_time">3</label><label class="btn btn-default">\
-                                    <input type="radio" autocomplete="off" value=4 name="plan_time">4</label></div>\
-                                    <input class="btn btn-primary add-task-child" name="commit" type="submit" value="送信">\
-                                    </form>\
-                                    </div>\
-                                    <div id='+ task.task_id +' class="task_cade task_doing task_doing_collor" draggable="true" ondragstart="onDragStart( event );">\
-                                    <strong id=task_name_'+task.task_id+'>' + task.task_name + '</strong>\
-                                    <br>予定:' +task.plan_time + 'h 実績:<br>\
-                                    </div>')
+                                tasktd.append(ownNotScaduledTask(task,usr_task_list.user_id,week[k]))
                             }
                         }else{
                                 //他人のタスクの場合
-                                tasktd.append('<div class="add-task js-form"><form action="/tasks/'+task.task_id+'.json" method="patch" class="js-submit none" id=add-task-form' + j + k +'"><input name="task_id" type="hidden" value="' + task.task_id + '"><input name="complete_flag" type="hidden" value=1><br>作業時間実績:<br><div class="btn-group" data-toggle="buttons" name="result_time"><label class="btn btn-default"><input type="radio" autocomplete="off" value="0.5" name="result_time">0.5</label><label class="btn btn-default"><input type="radio" autocomplete="off" value=1 name="result_time">1</label><label class="btn btn-default"><input type="radio" autocomplete="off" value=2 name="result_time">2</label><label class="btn btn-default"><input type="radio" autocomplete="off" value=3 name="result_time">3</label><label class="btn btn-default"><input type="radio" autocomplete="off" value=4 name="result_time">4</label></div><input class="btn btn-primary add-task-child" name="commit" type="submit" value="送信"></form><div id='+ task.task_id +' class="task_cade task_doing_collor" draggable="true" ondragstart="onDragStart( event );"><strong>' + task.task_name + '</strong><br>予定:' +task.plan_time + 'h 実績:<br>')
+                                tasktd.append(memberTask(task,usr_task_list.user_id,week[k]))
                             }
                         });
-}
-});
-td.append(tasktd);
-});
-tbody.append(td);
-if (j==0){
-    var comp_button_tr =$('<tr>');
-    $.each(week, function(k, date){
-                    //タスク追加ボタン
-                    comp_button_tr.append('<td><div class="add-task js-form">\
-                        <form action="/tasks.json" method="post" class="make-task none" id=add-task-form' + j + k +'">\
-                        タスク名:<br><input id="task-input"' +j + k +' name="task_name" type="text"><input name="user_id" type="hidden" value="' + $('#user_id').val() + '">\
-                        <input name="date" type="hidden" value="' + week[k] + '"><br>予定作業時間:<br><div class="btn-group" data-toggle="buttons" name="plan_time">\
-                        <label class="btn btn-default">\
-                        <input type="radio" autocomplete="off" value="0.5" name="plan_time">0.5</label><label class="btn btn-default">\
-                        <input type="radio" autocomplete="off" value=1 name="plan_time">1</label><label class="btn btn-default">\
-                        <input type="radio" autocomplete="off" value=2 name="plan_time">2</label><label class="btn btn-default">\
-                        <input type="radio" autocomplete="off" value=3 name="plan_time">3</label><label class="btn btn-default">\
-                        <input type="radio" autocomplete="off" value=4 name="plan_time">4</label></div>\
-                        <input class="btn btn-primary add-task-child" name="commit" type="submit" value="送信">\
-                        </form>\
-                        <div class="add-task-tmp"><a class="add-task-child btn btn-default"' + j + k +'" >タスクを追加</a></div></div></td>')
+                    }
                 });
-    tbody.append(comp_button_tr);
-}
-});
-table.append(tbody);
-$("#calendar").append(table);
-}
+                td.append(tasktd);
+            });
+            tbody.append(td);
+            if (j==0){
+                var comp_button_tr =$('<tr>');
+                $.each(week, function(k, date){
+                    //タスク追加ボタン
+                    comp_button_tr.append(addTask($('#user_id').val(),week[k],j,k))
+                });
+                tbody.append(comp_button_tr);
+            }
+        });
+        table.append(tbody);
+        $("#calendar").append(table);
+    }
 
     //main処理
     var target_date = new Date();
@@ -212,6 +149,8 @@ $("#calendar").append(table);
             // 通信成功時の処理
             success: function(result, textStatus, xhr) {
                 createTable(result.task_list,weekDate,target_date);
+                console.log($("#11_2016-07-17").find(".plan_time").text());
+                console.log($("#11_2016-07-17").find(".result_time").text());
             },
             // 通信失敗時の処理
             error: function(xhr, textStatus, error) {}

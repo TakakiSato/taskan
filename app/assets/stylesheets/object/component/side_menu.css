@@ -56,8 +56,10 @@
 /* 開閉用ボタン ※ボタンの細かいスタイルは省略 */
 .side-menu-btn {
   position: fixed;
-  top: 72px;
-  right: 20px;
+  top: 2px;
+  right: 10px;
+  width: 100px;
+  height: 50px;
   cursor: pointer;
   z-index: 4;
   margin: auto;
