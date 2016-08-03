@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160723020053) do
+ActiveRecord::Schema.define(version: 20160731023741) do
 
   create_table "invite_trans", id: false, force: true do |t|
     t.integer "team_id"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20160723020053) do
   create_table "member_projects", id: false, force: true do |t|
     t.integer "user_id"
     t.integer "project_id"
+    t.boolean "charge_project"
   end
 
   add_index "member_projects", ["user_id", "project_id"], name: "composit_menber_projects", unique: true, using: :btree
@@ -33,6 +34,7 @@ ActiveRecord::Schema.define(version: 20160723020053) do
   create_table "member_task_types", id: false, force: true do |t|
     t.integer "user_id"
     t.integer "task_type_id"
+    t.boolean "charge_task_type"
   end
 
   add_index "member_task_types", ["user_id", "task_type_id"], name: "composit_menber_task_types", unique: true, using: :btree
@@ -44,13 +46,6 @@ ActiveRecord::Schema.define(version: 20160723020053) do
 
   add_index "member_teams", ["team_id", "user_id"], name: "composit_menber_teams", unique: true, using: :btree
 
-  create_table "project_task_types", id: false, force: true do |t|
-    t.integer "project_id"
-    t.integer "task_type_id"
-  end
-
-  add_index "project_task_types", ["project_id", "task_type_id"], name: "composit_project_task_types", unique: true, using: :btree
-
   create_table "projects", primary_key: "project_id", force: true do |t|
     t.integer "team_id"
     t.string  "project_name"
@@ -59,18 +54,19 @@ ActiveRecord::Schema.define(version: 20160723020053) do
   create_table "task_types", primary_key: "task_type_id", force: true do |t|
     t.string  "type_name"
     t.integer "team_id"
+    t.integer "project_id"
   end
 
   create_table "tasks", primary_key: "task_id", force: true do |t|
     t.string  "task_name"
     t.integer "team_id"
     t.integer "user_id"
-    t.integer "task_type_id"
-    t.integer "plan_time"
-    t.integer "result_time"
-    t.boolean "complete_flag", default: false
+    t.float   "plan_time",     limit: 24
+    t.float   "result_time",   limit: 24
+    t.boolean "complete_flag",            default: false
     t.date    "date"
     t.integer "project_id"
+    t.integer "task_type_id"
   end
 
   create_table "team_task_types", id: false, force: true do |t|

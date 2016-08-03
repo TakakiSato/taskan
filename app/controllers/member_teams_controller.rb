@@ -12,7 +12,7 @@ class MemberTeamsController < ApplicationController
             user_id_list=MemberTeam.where("team_id = ?",params[:team_id]).pluck(:user_id)
             result[:belong_users]= User.select(:id,:user_name).where(id: user_id_list)
             #案件一覧取得
-            #result[:belong_projects]=Project.getTeamProject(params[:team_id],params[:user_id])
+            result[:belong_projects]=Project.getTeamProject(params[:team_id],params[:user_id])
 
         rescue => e
             if result[:error_message].blank?

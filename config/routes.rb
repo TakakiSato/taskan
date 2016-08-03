@@ -7,6 +7,10 @@ Rails.application.routes.draw do
   resources :task_types
   resources :tasks
   resources :teams
+  resources :projects
+  resources :analyze_tasks
+  match 'member_projects' => 'member_projects#update', :via => :patch
+  match 'member_task_types' => 'member_task_types#update', :via => :patch
   match 'join_team' => 'invite_trans#inviteComplete', :via => :get
   root :to => 'tasks#index'
 #  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }

@@ -19,11 +19,7 @@ function searchTeamName() {
                 //チームの一覧を表示する。
                 $('#belong_team').empty();
                 $.each(result.belong_teams, function(i, item){
-                    $('#belong_team').append('\
-                        <form action="/member_teams.json" class="js-submit" id= "' + item.team_id + '" method="get"><input id="team_id" name="team_id" type="hidden" value="' + item.team_id + '" />\
-                        <input class="btn btn-default btn-team-size" name="commit" type="submit" value="' +item.team_name +'" />\
-                        <input name="user_id" type="hidden" value=' + $('#user_id').val() +'>\
-                        </form>');
+                    $('#belong_team').append(memberListForm(item.team_id,item.team_name,$('#user_id').val()))
                 });
             },
                 // 通信失敗時の処理

@@ -1,5 +1,17 @@
 $(function() {
- function getDateTime(format, add_day,target_date){
+    //main処理
+    var target_date = new Date();
+    weekDate=weekDateGet(target_date);
+    sendAjax(weekDate,target_date);
+
+    $(document).on('click','.other-week',function(){
+        sendAjax($(this.id,target_date));
+    });
+});
+
+
+
+function getDateTime(format, add_day,target_date){
     if (format == null) format = null;
     if (add_day == null) add_day = 0;
 
@@ -52,7 +64,7 @@ function weekDateGet(target_date){
     }
 
 
-    function createTable(task_lists,week,target_date){
+    function createTable(task_lists,week,target_date,charge_project){
         week.push("未スケジュール");
         //自分を先頭にソート
         $.each(task_lists, function(i, task_list){
@@ -100,14 +112,14 @@ function weekDateGet(target_date){
                             }else if(j==0){
                                 if (date!="notset" ){
                                 //自分のタスクの場合
-                                tasktd.append(ownScaduledTask(task,usr_task_list.user_id,week[k]))
+                                tasktd.append(ownScaduledTask(task,usr_task_list.user_id,week[k],charge_project))
                             }else{
                                 //未スケジュールの場合完了ボタンを表示しない。
-                                tasktd.append(ownNotScaduledTask(task,usr_task_list.user_id,week[k]))
+                                tasktd.append(ownNotScaduledTask(task,usr_task_list.user_id,week[k],charge_project))
                             }
                         }else{
                                 //他人のタスクの場合
-                                tasktd.append(memberTask(task,usr_task_list.user_id,week[k]))
+                                tasktd.append(memberTask(task,usr_task_list.user_id,week[k],charge_project))
                             }
                         });
                     }
@@ -119,7 +131,7 @@ function weekDateGet(target_date){
                 var comp_button_tr =$('<tr>');
                 $.each(week, function(k, date){
                     //タスク追加ボタン
-                    comp_button_tr.append(addTask($('#user_id').val(),week[k],j,k))
+                    comp_button_tr.append(addTask($('#user_id').val(),week[k],j,k,charge_project))
                 });
                 tbody.append(comp_button_tr);
             }
@@ -127,15 +139,6 @@ function weekDateGet(target_date){
         table.append(tbody);
         $("#calendar").append(table);
     }
-
-    //main処理
-    var target_date = new Date();
-    weekDate=weekDateGet(target_date);
-    sendAjax(weekDate,target_date);
-
-    $(document).on('click','.other-week',function(){
-        sendAjax($(this.id,target_date));
-    });
 
 
 
@@ -148,9 +151,7 @@ function weekDateGet(target_date){
         timeout: 10000,
             // 通信成功時の処理
             success: function(result, textStatus, xhr) {
-                createTable(result.task_list,weekDate,target_date);
-                console.log($("#11_2016-07-17").find(".plan_time").text());
-                console.log($("#11_2016-07-17").find(".result_time").text());
+                createTable(result.task_list,weekDate,target_date,result.charge_project);
             },
             // 通信失敗時の処理
             error: function(xhr, textStatus, error) {}
@@ -164,7 +165,3 @@ function weekDateGet(target_date){
         sendAjax(weekDate,target_date);
 
     });
-
-});
-
-

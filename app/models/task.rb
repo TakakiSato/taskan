@@ -33,6 +33,8 @@ class Task < ActiveRecord::Base
             memberTaskHash[:week_task_list]=week_task_array
             taskList.push(memberTaskHash)
         end
+
+
         p taskList
         taskList
     end

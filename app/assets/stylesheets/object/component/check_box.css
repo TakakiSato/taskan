@@ -1,0 +1,16 @@
+div.check-group input {
+    display: none;
+}
+div.check-group label {
+    cursor: pointer;
+    padding: 5px 10px;
+    float: left;
+    border: solid 1px #aaa;
+    margin-left: -1px;
+    background: #FFFFFF;
+}
+div.check-group input:checked+label {
+    color: #fff;
+    background: #C3C3C3;
+    display: inline;
+}
