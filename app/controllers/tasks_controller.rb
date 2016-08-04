@@ -41,31 +41,31 @@ class TasksController < ApplicationController
       #タスクカード描画用にcharge_projectを返す
       result[:charge_project]=MemberProject.getChargeProject(result[:task][:user_id])
 
-   rescue => e
-    if result[:error_message].blank?
-      result[:error_message]=e.message
-    end
-    success=false
-  ensure
-    result[:success] = success
-    p result
-    respond_to do |format|
-      format.html
-      format.json {render :json => result}
+    rescue => e
+      if result[:error_message].blank?
+        result[:error_message]=e.message
+      end
+      success=false
+    ensure
+      result[:success] = success
+      p result
+      respond_to do |format|
+        format.html
+        format.json {render :json => result}
+      end
     end
   end
-end
 
-def update
-  begin
-    result=Hash.new
-    success= true
-    updCol=Hash.new
-    if params[:complete_flag]=="1" && params[:result_time].blank?
-      result[:error_message]="作業実績が入力されていません。"
-      flash[:notice] = result[:error_message]
-      raise
-    end
+  def update
+    begin
+      result=Hash.new
+      success= true
+      updCol=Hash.new
+      if params[:complete_flag]=="1" && params[:result_time].blank?
+        result[:error_message]="作業実績が入力されていません。"
+        flash[:notice] = result[:error_message]
+        raise
+      end
 
       #パラメータで渡されているものをチェックして更新用ハッシュを作成する。
       Task.column_names.each do |column|
@@ -78,11 +78,15 @@ def update
       if params[:date]=="notset"
         updCol["date"] = nil
       end
-      #完了時はteam_idを登録する
       p params[:complete_flag]
+      #完了時
       if params[:complete_flag]=="1"
         project_id = Task.where("task_id = ?" ,params[:id])[0].project_id
-        updCol["team_id"] = Project.where(project_id: project_id)[0].team_id
+        #完了時はprojectが指定されているタスクであればteam_idを登録する
+        if project_id.present?
+          updCol["team_id"] = Project.where(project_id: project_id)[0].team_id
+          p updCol["team_id"]
+        end
       end
       p "updCol"
       p updCol
