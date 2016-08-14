@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160731023741) do
+ActiveRecord::Schema.define(version: 20160814054938) do
 
   create_table "invite_trans", id: false, force: true do |t|
     t.integer "team_id"
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 20160731023741) do
     t.date    "date"
     t.integer "project_id"
     t.integer "task_type_id"
+    t.date    "dead_line"
+    t.string  "task_memo"
   end
 
   create_table "team_task_types", id: false, force: true do |t|

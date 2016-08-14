@@ -37,10 +37,9 @@ class TasksController < ApplicationController
         flash[:notice] = result[:error_message]
         raise
       end
-      result[:task]=Task.create(:task_name => params[:task_name],:user_id => params[:user_id],:plan_time => params[:plan_time] , :date => params[:date],:project_id=>params[:project_id],:task_type_id=>params[:task_type_id])
+      result[:task]=Task.create(:task_name => params[:task_name],:user_id => params[:user_id],:plan_time => params[:plan_time] , :date => params[:date],:project_id=>params[:project_id],:task_type_id=>params[:task_type_id],:dead_line=>params[:dead_line],:task_memo=>params[:task_memo])
       #タスクカード描画用にcharge_projectを返す
       result[:charge_project]=MemberProject.getChargeProject(result[:task][:user_id])
-
     rescue => e
       if result[:error_message].blank?
         result[:error_message]=e.message
@@ -66,7 +65,6 @@ class TasksController < ApplicationController
         flash[:notice] = result[:error_message]
         raise
       end
-
       #パラメータで渡されているものをチェックして更新用ハッシュを作成する。
       Task.column_names.each do |column|
         if params[column].present?

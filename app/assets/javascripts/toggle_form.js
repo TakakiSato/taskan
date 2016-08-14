@@ -13,6 +13,7 @@ $(function () {
 $(function () {
   $(document).on('click','.add-task-child',function(){
     $(this).parent().parent().children().toggle();
+    $("html,body").animate({scrollTop:$(this).parent().parent().children().offset().top});
   });
 });
 

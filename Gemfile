@@ -114,3 +114,6 @@ gem 'pry-doc'
 
 #外部キー
 gem 'foreigner'
+
+#raactをAssetPipelineに乗せられるようにする
+gem 'react-rails', '~> 1.0'

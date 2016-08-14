@@ -1,15 +1,16 @@
 $(function() {
     //main処理
-    var target_date = new Date();
-    weekDate=weekDateGet(target_date);
-    sendAjax(weekDate,target_date);
-
-    $(document).on('click','.other-week',function(){
-        sendAjax($(this.id,target_date));
-    });
+    console.log(location.pathname)
+    //トップページへのアクセスの時のみ処理する。
+    if (location.pathname=="/"){
+        var target_date = new Date();
+        weekDate=weekDateGet(target_date);
+        sendAjax(weekDate,target_date);
+        $(document).on('click','.other-week',function(){
+            sendAjax($(this.id,target_date));
+        });
+    }
 });
-
-
 
 function getDateTime(format, add_day,target_date){
     if (format == null) format = null;

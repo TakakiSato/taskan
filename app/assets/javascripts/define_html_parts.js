@@ -13,13 +13,17 @@
 
     //タスク修正フォーム
     function modifyTask(task,user_id,date,charge_project){
+        console.log("task.task_memo")
+        console.log(task.task_memo)
         return '<div id="upd_task_'+task.task_id+'"style="display:none;">\
         <form action="/tasks/'+task.task_id+'.json" method="patch" class="js-submit" >\
         タスク名:<br><input id="upd_task_name_'+task.task_id+'" name="task_name" type="text" value="' + task.task_name + '">\
         <br>予定作業時間:<br>\
         ' + taskPlanTimeButton() +'\
+        期限：<br><input type="date" name="dead_line" value=' + task.dead_line+ '>\
         ' + projectChoiceBotton(charge_project,task) +'\
         <br><input class="btn btn-primary" name="commit" type="submit" value="送信">\
+        <br>メモ：<br><textarea name="task_memo" rows="3">'+ task.task_memo + '</textarea>\
         </form>\
         </div>'
     }
@@ -33,8 +37,10 @@
         <input name="date" type="hidden" value="' + date + '">\
         <br>予定作業時間:<br>\
         ' + taskPlanTimeButton() +'\
+        期限：<br><input type="date" name="dead_line">\
         ' + projectChoiceBotton(charge_project,{task_id:date}) +'\
         <br><input class="btn btn-primary add-task-child" name="commit" type="submit" value="送信">\
+        <br>メモ：<br><textarea name="task_memo" rows="3"></textarea>\
         </form>'
     }
 

@@ -6,9 +6,11 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script src="https://fb.me/react-0.14.3.min.js"></script>
+  <script src="https://fb.me/react-dom-0.14.3.min.js"></script>-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
   <!--ドラッグアンドドロップ設定-->
@@ -77,7 +79,7 @@
               <ul class="nav navbar-nav">
                 <% if user_signed_in? %>
                 <li><strong><p class="navbar-text">　<%= current_user.user_name%></p></strong></li>
-            <!--    <li><%= link_to '分析', analyze_tasks_path(user_id: current_user.id) %></li>-->
+                <li><%= link_to '分析', analyze_tasks_path(user_id: current_user.id) %></li>
                 <li><%= link_to 'プロフィール変更', edit_user_registration_path %></li>
                 <li><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
                 <% else %>

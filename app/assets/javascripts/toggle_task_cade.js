@@ -6,6 +6,8 @@ $(function() {
         $('#upd_' + $(this).attr('id'))
         .css( 'display', '')
         .focus();
+        //タスクカードの位置に移動
+        $("html,body").animate({scrollTop:$('#upd_' + $(this).attr('id')).offset().top});
         //タスク名コピー
         $('#upd_task_name_' + $(this).attr('id'))
         .val( $( '#task_name_' + $(this).attr('id')).text())
@@ -26,6 +28,8 @@ $(function() {
         $('#task_done_' + $(this).parent().attr('id'))
         .css( 'display', '')
         .focus();
+        //タスクカードの位置に移動
+        $("html,body").animate({scrollTop:$('#task_done_' + $(this).parent().attr('id')).offset().top});
         return false;
     });
     $('.upd_task_data').blur(function() {
@@ -36,9 +40,6 @@ $(function() {
 });
 
 function taskTypeSearch(checked_project,task_id){
-    console.log("aaaaaaa")
-    console.log(checked_project)
-    console.log(task_id)
     if (checked_project){
         // 送信
         $.ajax({
@@ -48,11 +49,9 @@ function taskTypeSearch(checked_project,task_id){
             timeout: 10000,
             // 通信成功時の処理
             success: function(result, textStatus, xhr) {
-                console.log("aaaaaaaa")
                 console.log(result)
                 $('#task_type_choice_' +result.task.task_id).empty();
                 $('#project_choice_' +result.task.task_id).after(taskTypeChoiceBotton(result.task_type_list,result.task,result.charge_task_type));
-                console.log(taskTypeChoiceBotton(result.task_type_list,result.task))
             }
         });
 
@@ -60,7 +59,5 @@ function taskTypeSearch(checked_project,task_id){
 }
 
 $(document).on('change','.project_choice_button',function(){
-
     taskTypeSearch($("#project_choice_"+ $(this).attr('task_id')).find("input[name='project_id']:checked").val(),$(this).attr('task_id'))
 });
-
