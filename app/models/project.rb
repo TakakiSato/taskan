@@ -1,6 +1,8 @@
 class Project < ActiveRecord::Base
     belongs_to :team
     has_many :member_project ,foreign_key: [:project_id]
+    has_many :task_type ,foreign_key: [:project_id]
+
 
     def self.getTeamProject(team_id,user_id)
         result=Hash.new

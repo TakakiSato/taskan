@@ -35,13 +35,24 @@ class AnalyzeTasksController < ApplicationController
                         }]
 
             #team_idとteam_member_idがパラメータで渡されたものであり、直近ひと月でユニークなタスクタイプを取得する
-            task_type_list=Task.where("user_id in (?)", params[:team_member_id]).where(complete_flag: 1).where('date > ?', d.prev_month).select(:task_type_id).uniq.pluck(:task_type_id)
+            task_type_id_list=Task.where("user_id in (?)", params[:team_member_id]).where(complete_flag: 1).where('date > ?', d.prev_month).select(:task_type_id).uniq.pluck(:task_type_id)
 
             #タスクタイプごとの実績合計を取得する。
             task_type_result_list=Array.new
-            task_type_list.each do | task_type |
-                task_type_name=TaskType.where(task_type_id: task_type).pluck(:type_name)[0]
-                task_type_result_list.push([task_type_name.blank? ? "未分類" : task_type_name,task.where(task_type_id: task_type).where('date > ?',d.prev_month).sum(:result_time)])
+            task_type_id_list.each do | task_type_id |
+                task_type=TaskType.where(task_type_id: task_type_id)[0]
+                #.pluck(:type_name)[0]
+                #p task_type
+                project=task_type.blank? ? 0 : Project.where(project_id: task_type.project_id)[0]
+                p project
+                #p "-------------------"
+                #p TaskType.select("concat(project_name,type_name)as A").where(task_type_id: task_type).includes(:project).references(:project).to_sql
+                #p task_type_name_a
+                #p task_type_name_a.blank? ? "未分類" : task_type_name_a.project_name
+                #p task_type_name_a.blank? ? "未分類" : task_type_name_a.type_name
+                project_name=project == 0 || project.blank? ?  "未分類" : project.project_name
+                task_type_name=task_type.blank? ? "未分類" : task_type.type_name
+                task_type_result_list.push([project_name + "_" +task_type_name,task.where(task_type_id: task_type_id).where('date > ?',d.prev_month).sum(:result_time)])
             end
             result[:task_type_result_list]= task_type_result_list
         end
