@@ -50,5 +50,5 @@ test:
 production:
   <<: *default
   database: taskan_production
-  username: taskan
-  password: <%= ENV['TASKAN_DATABASE_PASSWORD'] %>
+#  username: taskan
+#  password: <%= ENV['TASKAN_DATABASE_PASSWORD'] %>
