@@ -60,7 +60,7 @@ $(function() {
                         if (result.task.complete_flag==1){
                                 //タスク完了の場合
                                 $('td#' + result.task.user_id + '_' + result.task.date).append(doneTask(result.task,result.charge_project));
-                                $("html,body").animate({scrollTop:$('div#' + result.task.task_id).offset().top});
+                                //$("html,body").animate({scrollTop:$('div#' + result.task.task_id).offset().top});
                             }else{
                             //日付チェック
                             var date=result.task.date
@@ -74,7 +74,7 @@ $(function() {
                                  //未スケジュールの場合
                                  $('td#' + result.task.user_id + '_' + date).append(ownNotScaduledTask(result.task,$('#user_id').val(),date,result.charge_project))
                              }
-                                $("html,body").animate({scrollTop:$('div#' + result.task.task_id).offset().top});
+                                //$("html,body").animate({scrollTop:$('div#' + result.task.task_id).offset().top});
                          }
                      }
                  }
