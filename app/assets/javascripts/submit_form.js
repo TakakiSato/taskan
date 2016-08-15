@@ -74,7 +74,7 @@ $(function() {
                                  //未スケジュールの場合
                                  $('td#' + result.task.user_id + '_' + date).append(ownNotScaduledTask(result.task,$('#user_id').val(),date,result.charge_project))
                              }
-                             if (($form.attr('action')=='/tasks.json' && $form.attr('method')=='post'){
+                             if ($form.attr('action')=='/tasks.json' && $form.attr('method')=='post'){
                                 $("html,body").animate({scrollTop:$('div#' + result.task.task_id).offset().top});
                             }
                          }
