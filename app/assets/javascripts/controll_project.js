@@ -14,6 +14,8 @@
         $('#team_' +team_id+ '_project').append("</ul>");
         //プロジェクト追加ボタン表示
         $('#team_' +team_id+ '_project').append(projectAddForm(team_id));
+        //チーム詳細チュートリアルリンク表示
+        $('#team_' +team_id+ '_project').append(teamDetailTutorial());
     }
 
     $(function() {

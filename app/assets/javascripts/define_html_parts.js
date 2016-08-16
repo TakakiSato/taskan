@@ -65,7 +65,9 @@
 
     //案件追加フォーム
     function projectAddForm(team_id){
-        return '<div class="btn btn-default project_add_form_toggle" id="' + team_id +'" >\
+        return '\
+        <div data-intro="「案件を作成する」を押すと案件名入力フォームが表示されます。<br>案件名を入力して作成ボタンを押してください<br><strong>※作成ボタンを押してもフォームのクリアはされませんが処理はされています。</strong><br>案件作成後、「担当案件」を選択してください。<br>選択された担当案件が、タスク作成時に選択できるようになります。" data-step="7">\
+        <div class="btn btn-default project_add_form_toggle" id="' + team_id +'" >\
         <p class="fa fa-tasks"> 案件を作成する</p>\
         </div>\
         <div id="make_project_'+ team_id +'"style="display:none;">\
@@ -75,6 +77,7 @@
         <input id="project_name" name="project_name" type="text" />\
         <input class="btn btn-primary " name="commit" type="submit" value="作成" />\
         </form>\
+        </div>\
         </div>'
     }
 
@@ -84,9 +87,9 @@
         <li>' + project_name + '\
         <div class="check-group clearfix">\
         <div>\
+        <div data-intro="自分が担当している案件の「担当案件」を選択してください。<br>選択された担当案件が、タスク作成時に選択できるようになります。" data-step="8">\
         <input id="project_charge_'+ user_id +'_' + project_id+'" class="project_charge_button" user_id='+ user_id +' project_id=' + project_id+' type="checkbox" name="check[]" value="1" checked/>\
         <label for="project_charge_'+ user_id +'_' + project_id+'">担当案件</label>\
-        </div>\
         </div>\
         '+taskTypeListForm(project_id,user_id,team_id)+'\
         </li>'
@@ -140,7 +143,9 @@
         <input id="project_id" name="project_id" type="hidden" value="' + project_id + '" />\
         <input name="user_id" type="hidden" value=' + user_id+'>\
         <input name="team_id" type="hidden" value=' + team_id+'>\
+        <div data-intro="案件の設定と同様に、「タスクタイプ表示」を押してタスクタイプの設定をしてください。<br>案件とタスクタイプが分析時の集計軸になります。<br>タスクタイプの例：「外出」、「レビュー」" data-step="9">\
         <input class="btn btn-default btn-team-size" name="commit" type="submit" value="タスクタイプ表示" />\
+        </div>\
         </form>'
     }
 
@@ -226,6 +231,13 @@
         <input name="user_id" type="hidden" value=' + user_id+'>\
         </form>'
     }
+
+    //チーム詳細チュートリアルボタン
+    function teamDetailTutorial(){
+        return '\
+        <br><a id="team_detail_tutorial">チーム詳細チュートリアル</a>'
+    }
+
 
 //htmlくみ上げ
     //完了タスク

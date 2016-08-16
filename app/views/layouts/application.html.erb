@@ -11,8 +11,9 @@
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <script src="https://fb.me/react-0.14.3.min.js"></script>
   <script src="https://fb.me/react-dom-0.14.3.min.js"></script>-->
+  <!--webフォント-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
   <!--ドラッグアンドドロップ設定-->
   <script>
     function onDragStart( $event ) {
@@ -24,27 +25,10 @@
     function onDrop( $event, $this ) {
       $event.preventDefault();
       var $data = $event.dataTransfer.getData( "text/html" );
-      console.log($this.id)
-      console.log($('#user_id').val())
-      console.log($data)
-      console.log($("#task_done_form"+$data))
-      //console.log(document.getElementById($data).child("user_id"))
-      //console.log(document.getElementById($data).childs("date"))
       id_date=($this.id).split("_")
       $this.appendChild( document.getElementById($data) );
-//    //自分のタスク
-//    if ($('#user_id').val()==id_date[0]){
-//    //未スケジュールの場合
-//    if (id_date[1]=="notset"){
-//      $this.appendChild( ownNotScaduledTask(task,id_date[0],id_date[1]) );
-//    }else{
-//    }
-//  }else{
-//    //メンバーのタスク
-//    ownScaduledTask(task,user_id,date)
-//    ownNotScaduledTask(task,user_id,date)
-//    memberTask(task,user_id,date)
-//  }
+      console.log($data);
+      console.log($this);
         // 送信
         $.ajax({
           url: '/tasks/' + $data + '.json',
@@ -72,7 +56,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a href="/" class="navbar-brand">TasKan</a>
+              <div class="logo navbar_logo_size" <a href="/" class="navbar-brand">taskan</a></div>
             </div>
 
             <div class="collapse navbar-collapse" id="collapse-target">
@@ -81,6 +65,7 @@
                 <li><strong><p class="navbar-text">　<%= current_user.user_name%></p></strong></li>
                 <li><%= link_to '分析', analyze_tasks_path(user_id: current_user.id) %></li>
                 <li><%= link_to 'プロフィール変更', edit_user_registration_path %></li>
+                <li><a id='tutorial'>チーム管理の使い方</a></li>
                 <li><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
                 <% else %>
                 <li><%= link_to 'サインアップ', new_user_registration_path %></li>

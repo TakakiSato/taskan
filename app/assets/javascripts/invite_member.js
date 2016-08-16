@@ -9,7 +9,7 @@ $(function() {
 
 });
 
-    function memberListAdd(team_id,members,invite_user_id){
+function memberListAdd(team_id,members,invite_user_id){
         //メンバー一覧初期化
         $('#team_' +team_id+ '_member').empty();
         //メンバー一覧表示
@@ -20,5 +20,8 @@ $(function() {
         });
         $('#team_' +team_id+ '_member').append("</ul>");
         //招待処理ボタン表示
-        $('#team_' +team_id+ '_member').append('<div class="btn btn-default invite_start" id="' + team_id + ' '+ invite_user_id + '" ><p class="fa fa-user-plus"> メンバーを招待する</p></div>');
+        $('#team_' +team_id+ '_member').append('\
+            <div data-intro="「メンバーを招待する」を押すとメールアドレス入力フォームが表示されます。<br>チームに招待したい人のメールアドレスを入力して送信ボタンを押してください<br><strong>※送信ボタンを押してもフォームのクリアはされませんがメールの送信はされています。</strong><br>" data-step="6">\
+            <div class="btn btn-default invite_start" id="' + team_id + ' '+ invite_user_id + '" ><p class="fa fa-user-plus"> メンバーを招待する</p></div>\
+            </div>');
     }

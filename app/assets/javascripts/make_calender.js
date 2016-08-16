@@ -101,6 +101,8 @@ function weekDateGet(target_date){
             }else {
                 var td = $('<tr><td>' + usr_task_list.user_name + '</td>')
             }
+            var plan_time=0
+            var result_time=0
             //タスク表示
             $.each(week, function(k, date){
                 var tasktd = $('<td class="'+ date +'" id="'+usr_task_list.user_id+'_'+ date +'" ondrop="onDrop( event, this );"ondragover="onDragOver( event );">')
@@ -122,10 +124,15 @@ function weekDateGet(target_date){
                                 //他人のタスクの場合
                                 tasktd.append(memberTask(task,usr_task_list.user_id,week[k],charge_project))
                             }
+                            plan_time=Number(plan_time)+Number(task.plan_time);
+                            result_time=Number(result_time)+Number(task.result_time);
                         });
                     }
                 });
+                tasktd.prepend("予定合計:" + plan_time + "h<br>実績合計:" + result_time + "h")
                 td.append(tasktd);
+                plan_time=0
+                result_time=0
             });
             tbody.append(td);
             if (j==0){

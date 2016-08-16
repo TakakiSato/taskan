@@ -5,17 +5,21 @@
 
          <!-- サイドメニュー -->
          <nav class="side-menu">
-          <h2>所属チーム</h2>
-          <ul id="belong_team" class="js-form">
+          <h2  data-intro="ここに所属チームが表示されます。" data-step="2">所属チーム</h2>
+          <div data-intro="チーム名を押すとチームの詳細設定をできます。<br><strong>以降のチュートリアルはチーム名クリック後にある「チーム詳細チュートリアル」を押してください。</strong><br>" data-step="5">
+            <ul id="belong_team" class="js-form">
+            </div>
           </ul>
-          <br>
+        </div>
+        <br>
 
-          <div class="btn btn-default" id="create-team">
-            <p  class="navbar-text fa fa-users"> チーム作成</p>
-          </div>
+        <div class="btn btn-default" id="create-team" data-intro="<strong>「チーム作成」ボタンを押してくから次へを押してください。</strong>" data-step="3">
+          <p  class="navbar-text fa fa-users"> チーム作成</p>
+        </div>
 
-          <!--チーム作成フォーム-->
-          <div id="create-team-form" class="js-form">
+        <!--チーム作成フォーム-->
+        <div data-intro="チーム名を入力して送信を押すとチームが作成できます。<br>代表者がチームを作成してください。<br>(代表者はどなたでも問題ありません。)<br><strong>※送信を押すとチームが作成されます。作成の必要が無い場合は送信を押さないでください。<br>チーム作成後は画面をリロードして下さい。左画面でタスクが登録できるようになります。</strong>" data-step="4">
+          <div class="js-form" id="create-team-form" >
             <%= form_tag('/teams.json', :method => :post , :class => 'js-submit') do %>
             <%= hidden_field_tag 'user_id', current_user.id%>
             チーム名:
@@ -23,16 +27,24 @@
             <%= submit_tag '作成', class: "btn btn-primary "%>
             <% end %>
           </div>
-        </nav>
+        </div>
+      </nav>
 
-        <!-- 開閉用ボタン -->
-        <div class="side-menu-btn btn btn-default" id="js__sideMenuBtn">
-         チーム管理
-       </div>
-       <!-- メインコンテンツ -->
-       <div class="container">
+      <!-- 開閉用ボタン -->
+      <div class="side-menu-btn btn btn-default" id="js__sideMenuBtn" data-intro="まず、所属チームの設定をします。　<br><strong>「チーム管理」ボタンを押してから、次へを押してください。</strong>" data-step="1">
+       チーム管理
+     </div>
+
+      <!-- メインコンテンツ -->
+      <div class="container">
         <div id=calendar></div>
+      <p class="text_left">【使い方】<br>タスク追加ボタンでタスクを追加できます。<br>(チーム管理の初期設定が完了していないとタスク追加できません。)<br>作成したタスクはドラッグアンドドロップで移動できます。<br>チーム管理で登録した案件、タスクタイプごとにタスクを分類できます。<br>チーム管理のやり方は画面上部の「チーム管理の使い方」を押してください。</p>
       </div>
 
+
+      <% else %>
+      <div class="logo container_logo_size" <a href="/" class="navbar-brand">taskan</a></div>
+      <hr>
+      <p class="container_first_message">taskanへようこそ!!<br>ユーザ登録をされていない方は画面上部のサインアップから利用開始してください。<br>ユーザ作成済みの方はログインから利用開始してください。</p>
 
       <% end %>

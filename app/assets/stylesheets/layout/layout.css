@@ -16,9 +16,6 @@
   font-weight: normal;
   font-style: normal;
 }
-title{
-    font-family: 'PrintBold';
-}
 .js-accordion {
     width:100%;
     display: block;
@@ -32,6 +29,9 @@ title{
     display: none;
 }
 
+.text_left{
+    text-align:left;
+}
 
 body{
 font-family: helvetica, arial, 'hiragino kaku gothic pro', meiryo, 'ms pgothic', sans-serif;

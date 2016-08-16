@@ -1,0 +1,17 @@
+.logo{
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.navbar_logo_size{
+    font-size: 36px;
+}
+
+.container_logo_size{
+    font-size: 142px;
+    margin: 0 auto;
+    text-align:center;
+}
+
+.container_first_message{
+    text-align:center;
+}
